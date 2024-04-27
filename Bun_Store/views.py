@@ -43,7 +43,7 @@ def user_signup(request):
             try:
                 user = User.objects.create_user(username, email, password)
                 customer = Customer.objects.create(user=user, first_name=first_name, last_name=last_name, email=email, password=password)
-                # user.save()
+                user.save()
                 customer.save()
                 login(request, user)
                 return redirect("/")
