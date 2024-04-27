@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from .models import *
 
 # Create your views here.
 @login_required
@@ -32,6 +33,8 @@ def user_login(request):
 def user_signup(request):
     if request.method == "POST":
         username = request.POST["username"]
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
         email = request.POST["email"]
         password = request.POST["password"]
         repeatPassword = request.POST["repeatPassword"]
@@ -39,7 +42,9 @@ def user_signup(request):
         if password == repeatPassword:
             try:
                 user = User.objects.create_user(username, email, password)
-                user.save()
+                customer = Customer.objects.create(user=user, first_name=first_name, last_name=last_name, email=email, password=password)
+                # user.save()
+                customer.save()
                 login(request, user)
                 return redirect("/")
             except:
