@@ -4,13 +4,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import *
 
+
 # Create your views here.
+
+
+# Home and Accounts management
 @login_required
 def bun_Home(request):
-    context = {
-        "title": "Honey Bun Shop",
-        "description": "Home page of Honey Bun Shop"
-    }
+    context = {"title": "Honey Bun Shop", "description": "Home page of Honey Bun Shop"}
     return render(request, "bun_home.html", context)
 
 
@@ -19,6 +20,7 @@ def user_login(request):
         username = request.POST["username"]
         password = request.POST["password"]
 
+        # Validating if data is correct
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
@@ -33,18 +35,22 @@ def user_login(request):
 def user_signup(request):
     if request.method == "POST":
         username = request.POST["username"]
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
+        first_name = request.POST["first_name"]
+        last_name = request.POST["last_name"]
         email = request.POST["email"]
         password = request.POST["password"]
         repeatPassword = request.POST["repeatPassword"]
 
         if password == repeatPassword:
             try:
+                # Creating user
                 user = User.objects.create_user(username, email, password)
-                customer = Customer.objects.create(user=user, first_name=first_name, last_name=last_name, email=email, password=password)
+
+                user.first_name = first_name
+                user.last_name = last_name
+
                 user.save()
-                customer.save()
+
                 login(request, user)
                 return redirect("/")
             except:
@@ -60,4 +66,7 @@ def user_signup(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('/')
+    return redirect("/")
+
+
+# Store and product management
