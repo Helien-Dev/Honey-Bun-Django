@@ -51,7 +51,7 @@ def user_signup(request):
 
                 user.save()
 
-                login(request, user)
+                login(request, user, )
                 return redirect("/")
             except:
                 error_message = "Error creating account"
@@ -73,7 +73,7 @@ def user_logout(request):
 def bun_store(request):
     products = Product.objects.all()
     context = {
-        "title": 'Honey Bun Store',
+        "title": "Honey Bun Store",
         "products": products,
     }
-    return render(request, 'bun_store.html', context)
+    return render(request, "bun_store.html", context)
