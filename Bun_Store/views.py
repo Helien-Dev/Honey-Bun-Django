@@ -1,15 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def bun_Home(request):
-    username = request.user
     context = {
         "title": "Honey Bun Shop",
-        "description": "Home page of Honey Bun Shop",
-        "username": username,
+        "description": "Home page of Honey Bun Shop"
     }
     return render(request, "bun_home.html", context)
 
@@ -55,4 +54,5 @@ def user_signup(request):
 
 
 def user_logout(request):
-    pass
+    logout(request)
+    return redirect('/')
