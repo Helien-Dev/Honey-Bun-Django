@@ -57,8 +57,9 @@ def user_signup(request):
 
                 login(request, user, )
                 return redirect("/")
-            except:
-                error_message = "Error creating account"
+            except Exception as e:
+                error_message = f"Error creating account {e}"
+                print(error_message)
                 return render(
                     request, "user_signup.html", {"error_message": error_message}, context
                 )
