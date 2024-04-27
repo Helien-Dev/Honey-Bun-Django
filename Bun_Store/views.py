@@ -70,3 +70,10 @@ def user_logout(request):
 
 
 # Store and product management
+def bun_store(request):
+    products = Product.objects.all()
+    context = {
+        "title": 'Honey Bun Store',
+        "products": products,
+    }
+    return render(request, 'bun_store.html', context)
