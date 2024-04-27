@@ -14,7 +14,6 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=200, null=True)
     last_name = models.CharField(max_length=200, null=True)
     email = models.CharField(max_length=300, null=True)
-    name = models.CharField(max_length=300, null=True)
 
     @receiver(post_save, sender=User)
     def create_or_update_customer(sender, instance, created, **kwargs):
@@ -25,7 +24,6 @@ class Customer(models.Model):
                     email=instance.email,
                     first_name=instance.first_name,
                     last_name=instance.last_name,
-                    name=instance.name
                 )
             except Exception as e:
                 print(f"Error trying to create customer: {e}")
@@ -34,7 +32,6 @@ class Customer(models.Model):
                 instance.customer.email = instance.email 
                 instance.customer.first_name = instance.first_name
                 instance.customer.last_name = instance.last_name
-                instance.customer.name = f"{instance.first_name} {instance.last_name}" 
                 instance.customer.save()
             except Exception as e:
                 print(f"Error trying to update customer: {e}")

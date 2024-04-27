@@ -33,6 +33,10 @@ def user_login(request):
 
 
 def user_signup(request):
+    context = {
+        'title': 'User signup',
+        'description': 'Create your account with us'
+    }
     if request.method == "POST":
         username = request.POST["username"]
         first_name = request.POST["first_name"]
@@ -56,12 +60,12 @@ def user_signup(request):
             except:
                 error_message = "Error creating account"
                 return render(
-                    request, "user_signup.html", {"error_message": error_message}
+                    request, "user_signup.html", {"error_message": error_message}, context
                 )
         else:
             error_message = "Password do not match"
             return render(request, "user_signup.html", {"error_message": error_message})
-    return render(request, "user_signup.html")
+    return render(request, "user_signup.html", context)
 
 
 def user_logout(request):
