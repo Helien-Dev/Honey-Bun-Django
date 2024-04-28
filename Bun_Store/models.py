@@ -3,13 +3,12 @@ from django.utils.text import slugify
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.conf import settings
 
 
 # Create your models here.
 class Customer(models.Model):
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE, null=True, blank=True
-    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     password = models.CharField(max_length=200, null=True)
     first_name = models.CharField(max_length=200, null=True)
     last_name = models.CharField(max_length=200, null=True)
@@ -29,7 +28,7 @@ class Customer(models.Model):
                 print(f"Error trying to create customer: {e}")
         else:
             try:
-                instance.customer.email = instance.email 
+                instance.customer.email = instance.email
                 instance.customer.first_name = instance.first_name
                 instance.customer.last_name = instance.last_name
                 instance.customer.save()
@@ -52,6 +51,18 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+    DEFAULT_IMAGE_URL = settings.MEDIA_URL + "/not_image_found.jpg"
+
+    @property
+    def ImageURL(
+        self,
+    ):
+        try:
+            url = self.image.url
+        except:
+            url = self.DEFAULT_IMAGE_URL
+        return url
 
     def __str__(self):
         return self.name
