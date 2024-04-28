@@ -1,4 +1,5 @@
 var updateBtns = document.getElementsByClassName("update-cart");
+var store_redirect = '{% url "bun_store" %}'
 
 // CSRFTOKEN
 function getCookie(name) {
@@ -115,4 +116,19 @@ function submitFormData() {
   console.log('Shipping info:', shippingInfo)
   console.log('User info:', userFormData)
 
+  var url = '/process_order/'
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrftoken,
+    },
+    body: JSON.stringify({ "form": userFormData, "shipping": shippingInfo }),
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    console.log('Success:', data)
+    alert('Transaction completed')
+    window.location.href = '/store/'
+  })
 }

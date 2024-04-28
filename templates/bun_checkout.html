@@ -103,15 +103,17 @@
         </div>
 
         <hr>
-        <input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+        <button id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+            Continue
+        </button>
     </form>
 </div>
 <br>
-	<div class="box-element hidden" id="payment-info">
-		<small>Paypal Options</small>
-		<button id="make-payment">Make payment</button>
-		<div id="paypal-button-container"></div>
-	</div>
+<div class="box-element" id="payment-info">
+	<small>Paypal Options</small>
+	<button id="make-payment" >Make payment</button>
+	<div id="paypal-button-container"></div>
+</div>
 
 
 {% endblock content %}
