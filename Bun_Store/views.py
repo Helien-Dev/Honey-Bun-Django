@@ -15,7 +15,25 @@ from .models import *
 # Home and Accounts management
 @login_required
 def bun_Home(request):
-    context = {"title": "Honey Bun Shop", "description": "Home page of Honey Bun Shop"}
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        cartItems = order["get_cart_items"]
+        items = []
+        order = {
+            "get_cart_total": 0,
+            "get_cart_items": 0,
+        }
+
+    context = {
+        "title": "Honey Bun Shop",
+        "description": "Home page of Honey Bun Shop",
+        "cartItems": cartItems,
+    }
+
     return render(request, "bun_home.html", context)
 
 
@@ -84,8 +102,22 @@ def user_logout(request):
 
 # Store, cart, checkout and product management
 def bun_store(request):
+
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        items = []
+        order = {"get_cart_total": 0, "get_cart_items": 0}
+        cartItems = order["get_cart_items"]
+
     products = Product.objects.all()
     context = {
+        "items": items,
+        "order": order,
+        "cartItems": cartItems,
         "title": "Honey Bun Store",
         "products": products,
     }
@@ -97,20 +129,29 @@ def bun_cart(request):
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
     else:
         error_message = "You need to be log in to get a cart"
 
+        cartItems = order["get_cart_items"]
         items = []
         order = {
             "get_cart_total": 0,
             "get_cart_items": 0,
         }
-        context = {"items": items, "order": order, "error_message": error_message}
+        context = {
+            "items": items,
+            "order": order,
+            "error_message": error_message,
+            "cartItems": cartItems,
+        }
+
         return render(request, "bun_cart.html", context)
 
     context = {
         "items": items,
         "order": order,
+        "cartItems": cartItems,
     }
     return render(request, "bun_cart.html", context)
 
@@ -120,15 +161,19 @@ def bun_checkout(request):
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
     else:
         items = []
         order = {"get_cart_total": 0, "get_cart_items": 0}
+        cartItems = order["get_cart_items"]
 
     context = {
         "items": items,
         "order": order,
+        "cartItems": cartItems,
     }
     return render(request, "bun_checkout.html", context)
+
 
 @csrf_protect
 def bun_updateItem(request):
@@ -141,14 +186,14 @@ def bun_updateItem(request):
     product = Product.objects.get(id=productId)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-    
-    if action == 'add':
-        orderItem.quantity = (orderItem.quantity + 1)
-    elif action == 'remove':
-        orderItem.quantity = (orderItem.quantity - 1)
-        
+
+    if action == "add":
+        orderItem.quantity = orderItem.quantity + 1
+    elif action == "remove":
+        orderItem.quantity = orderItem.quantity - 1
+
     orderItem.save()
-    
+
     if orderItem.quantity <= 0:
         orderItem.delete()
 

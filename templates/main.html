@@ -110,7 +110,7 @@
             <div class="flex justify-center md:block">
               <a
                 class="relative text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300"
-                href="#"
+                href="{% url 'bun_cart' %}"
               >
                 <svg
                   class="w-5 h-5"
@@ -128,8 +128,8 @@
                 </svg>
 
                 <span
-                  class="absolute top-0 left-0 p-1 text-xs text-white bg-blue-500 rounded-full"
-                ></span>
+                  class="absolute px-4 left-0  text-xs text-white bg-blue-500 rounded-full" 
+                > {{ cartItems }}</span>
               </a>
             </div>
           </div>
