@@ -15,7 +15,7 @@
 <div>
     <h2>Items: {{ order.get_cart_items }}</h2>
     <h2>Total {{ order.get_cart_total }}</h2>
-    <button>Checkout</button>
+    <a href="{% url 'bun_checkout' %}">Checkout</a>
 </div>
 
 <div class="rounded-2xl max-w-[1200px] m-auto w-full my-10 relative overflow-x-auto shadow-md">
@@ -52,7 +52,8 @@
                 </td>
                 </th>
                 <td class="px-6 py-4">
-                    {{ item.quantity }}
+                    <svg data-product="{{ item.product.id }}" data-action="add" class="chg-quantity update-cart" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32"><path fill="currentColor" d="M23.963 20.834L17.5 9.64c-.825-1.43-2.175-1.43-3 0L8.037 20.834c-.825 1.43-.15 2.598 1.5 2.598h12.926c1.65 0 2.325-1.17 1.5-2.598"/></svg>
+                    <svg data-product="{{ item.product.id }}" data-action="remove" class="chg-quantity update-cart" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32"><path fill="currentColor" d="M8.037 11.166L14.5 22.36c.825 1.43 2.175 1.43 3 0l6.463-11.195c.826-1.43.15-2.598-1.5-2.598H9.537c-1.65 0-2.326 1.17-1.5 2.6z"/></svg>{{ item.quantity }}
                 </td>
                 <td class="px-6 py-4">
                     ${{ item.product.price|floatformat:2 }}
