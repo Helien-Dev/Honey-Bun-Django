@@ -33,10 +33,7 @@ def user_login(request):
 
 
 def user_signup(request):
-    context = {
-        'title': 'User signup',
-        'description': 'Create your account with us'
-    }
+    context = {"title": "User signup", "description": "Create your account with us"}
     if request.method == "POST":
         username = request.POST["username"]
         first_name = request.POST["first_name"]
@@ -55,13 +52,19 @@ def user_signup(request):
 
                 user.save()
 
-                login(request, user, )
+                login(
+                    request,
+                    user,
+                )
                 return redirect("/")
             except Exception as e:
                 error_message = f"Error creating account {e}"
                 print(error_message)
                 return render(
-                    request, "user_signup.html", {"error_message": error_message}, context
+                    request,
+                    "user_signup.html",
+                    {"error_message": error_message},
+                    context,
                 )
         else:
             error_message = "Password do not match"
@@ -74,7 +77,7 @@ def user_logout(request):
     return redirect("/")
 
 
-# Store and product management
+# Store, cart, checkout and product management
 def bun_store(request):
     products = Product.objects.all()
     context = {
@@ -83,13 +86,44 @@ def bun_store(request):
     }
     return render(request, "bun_store.html", context)
 
+
 def bun_cart(request):
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
     else:
+        error_message = "You need to be log in to get a cart"
+
         items = []
+        order = {
+            "get_cart_total": 0,
+            "get_cart_items": 0,
+        }
+        context = {"items": items, "order": order, "error_message": error_message}
+        return render(request, "bun_cart.html", context)
+
+    context = {
+        "items": items,
+        "order": order,
+    }
+    return render(request, "bun_cart.html", context)
+
+
+def bun_checkout(request):
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {
+            "get_cart_total": 0, 
+            "get_cart_items": 0
+        }
         
-    context = {"items": items}
-    return render(request, 'bun_cart.html', context)
+    context = {
+        "items": items,
+        "order": order,
+    }
+    return render(request, "bun_checkout.html", context)
