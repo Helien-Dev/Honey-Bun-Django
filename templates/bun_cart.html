@@ -14,7 +14,7 @@
 
 <div>
     <h2>Items: {{ order.get_cart_items }}</h2>
-    <h2>Total {{ order.get_cart_total }}</h2>
+    <h2>Total {{ order.get_cart_total|floatformat:2 }}</h2>
     <a href="{% url 'bun_checkout' %}">Checkout</a>
 </div>
 

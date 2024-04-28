@@ -18,7 +18,7 @@ function getCookie(name) {
 }
 const csrftoken = getCookie("csrftoken");
 
-// CART 
+// CART/STORE
 for (let i = 0; i < updateBtns.length; i++) {
   updateBtns[i].addEventListener("click", function () {
     var productId = this.dataset.product;
@@ -41,7 +41,7 @@ function updateUserOrder(productId, action) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      'X-CSRFToken':csrftoken,
+      "X-CSRFToken": csrftoken,
     },
     body: JSON.stringify({ "productId": productId, "action": action }),
   })
@@ -50,23 +50,41 @@ function updateUserOrder(productId, action) {
     })
     .then((data) => {
       console.log("Data:", data);
-      location.reload()
+      location.reload();
     })
     .catch((error) => {
       console.error("Fetch error:", error);
     });
 }
 
-// SHIPPING
-if (shipping == 'False'){
-  document.getElementById('shipping-info').innerHTML = ''
+// SHIPPING/CHECKOUT
+if (shipping == "False") {
+  document.getElementById("shipping-info").innerHTML = " ";
 }
 
-// FORM
-var form = document.getElementById('form')
-form.addEventListener('submit', function(e) {
-  e.preventDefault()
-  console.log('Form submitted')
-  document.getElementById('form-button').classList.add('hidden')
-  document.getElementById('form-button').classList.remove('hidden')
-})
+if (user != 'AnonymousUser'){
+  document.getElementById('user-info').innerHTML = ''
+}
+
+if (shipping == "False" && user != "AnonymousUser") {
+  // Hide the form if the user is logged and shipping is false
+  document.getElementById("form-wrapper").classList.add("hidden");
+  document.getElementById("payment-info").classList.remove("hidden");
+}
+
+// FORM/CHECKOUT
+var form = document.getElementById("form");
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  console.log("Form submitted");
+  document.getElementById("form-button").classList.add("hidden");
+  document.getElementById("make-payment").classList.remove("hidden");
+});
+
+document.getElementById("make-payment").addEventListener("click", function (e) {
+  submitFormData();
+});
+
+function submitFormData() {
+  console.log("Payment button clicked");
+}
