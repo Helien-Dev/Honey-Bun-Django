@@ -1,7 +1,11 @@
+import json
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_protect
+from django.http import JsonResponse
 from .models import *
 
 
@@ -56,6 +60,7 @@ def user_signup(request):
                     request,
                     user,
                 )
+
                 return redirect("/")
             except Exception as e:
                 error_message = f"Error creating account {e}"
@@ -109,7 +114,6 @@ def bun_cart(request):
     }
     return render(request, "bun_cart.html", context)
 
-
 def bun_checkout(request):
     if request.user.is_authenticated:
         customer = request.user.customer
@@ -117,13 +121,18 @@ def bun_checkout(request):
         items = order.orderitem_set.all()
     else:
         items = []
-        order = {
-            "get_cart_total": 0, 
-            "get_cart_items": 0
-        }
-        
+        order = {"get_cart_total": 0, "get_cart_items": 0}
+
     context = {
         "items": items,
         "order": order,
     }
     return render(request, "bun_checkout.html", context)
+
+
+def bun_updateItem(request):
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
+    print(f'Action: {action}, ProductID: {productId}')
+    return JsonResponse("Item was added", safe=False)
