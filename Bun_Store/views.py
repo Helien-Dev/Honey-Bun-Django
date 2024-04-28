@@ -23,10 +23,7 @@ def bun_Home(request):
     else:
         cartItems = order["get_cart_items"]
         items = []
-        order = {
-            "get_cart_total": 0,
-            "get_cart_items": 0,
-        }
+        order = {"get_cart_total": 0, "get_cart_items": 0, "shipping": False}
 
     context = {
         "title": "Honey Bun Shop",
@@ -110,7 +107,8 @@ def bun_store(request):
         cartItems = order.get_cart_items
     else:
         items = []
-        order = {"get_cart_total": 0, "get_cart_items": 0}
+        order = {"get_cart_total": 0, "get_cart_items": 0, "shipping": False}
+
         cartItems = order["get_cart_items"]
 
     products = Product.objects.all()
@@ -135,10 +133,7 @@ def bun_cart(request):
 
         cartItems = order["get_cart_items"]
         items = []
-        order = {
-            "get_cart_total": 0,
-            "get_cart_items": 0,
-        }
+        order = {"get_cart_total": 0, "get_cart_items": 0, "shipping": False}
         context = {
             "items": items,
             "order": order,
@@ -164,7 +159,8 @@ def bun_checkout(request):
         cartItems = order.get_cart_items
     else:
         items = []
-        order = {"get_cart_total": 0, "get_cart_items": 0}
+        order = {"get_cart_total": 0, "get_cart_items": 0, "shipping": False}
+
         cartItems = order["get_cart_items"]
 
     context = {

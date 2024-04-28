@@ -1,5 +1,6 @@
 var updateBtns = document.getElementsByClassName("update-cart");
 
+// CSRFTOKEN
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
@@ -17,6 +18,7 @@ function getCookie(name) {
 }
 const csrftoken = getCookie("csrftoken");
 
+// CART 
 for (let i = 0; i < updateBtns.length; i++) {
   updateBtns[i].addEventListener("click", function () {
     var productId = this.dataset.product;
@@ -54,3 +56,17 @@ function updateUserOrder(productId, action) {
       console.error("Fetch error:", error);
     });
 }
+
+// SHIPPING
+if (shipping == 'False'){
+  document.getElementById('shipping-info').innerHTML = ''
+}
+
+// FORM
+var form = document.getElementById('form')
+form.addEventListener('submit', function(e) {
+  e.preventDefault()
+  console.log('Form submitted')
+  document.getElementById('form-button').classList.add('hidden')
+  document.getElementById('form-button').classList.remove('hidden')
+})
