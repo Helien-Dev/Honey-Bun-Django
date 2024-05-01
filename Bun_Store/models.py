@@ -12,7 +12,7 @@ class Customer(models.Model):
     password = models.CharField(max_length=200, null=True)
     first_name = models.CharField(max_length=200, null=True)
     last_name = models.CharField(max_length=200, null=True)
-    email = models.CharField(max_length=300, null=True)
+    email = models.EmailField(max_length=300, null=True)
 
     @receiver(post_save, sender=User)
     def create_or_update_customer(sender, instance, created, **kwargs):
