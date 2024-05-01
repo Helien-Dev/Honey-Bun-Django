@@ -1,6 +1,6 @@
 import json
 import datetime
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -13,7 +13,7 @@ from .models import *
 # Create your views here.
 
 
-# Home and Accounts management
+# HOME AND ACCOUNT MANAGEMENT
 @login_required
 def bun_Home(request):
     if request.user.is_authenticated:
@@ -34,7 +34,7 @@ def bun_Home(request):
 
     return render(request, "bun_home.html", context)
 
-
+# Login to a existing account
 def user_login(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -51,7 +51,7 @@ def user_login(request):
 
     return render(request, "user_login.html")
 
-
+# Create an account
 def user_signup(request):
     context = {"title": "User signup", "description": "Create your account with us"}
     if request.method == "POST":
@@ -98,7 +98,7 @@ def user_logout(request):
     return redirect("/")
 
 
-# Store, cart, checkout and product management
+# STORE, CART, CHECKOUT AND PRODUCT MANAGEMENT 
 def bun_store(request):
 
     if request.user.is_authenticated:
@@ -172,7 +172,6 @@ def bun_checkout(request):
     return render(request, "bun_checkout.html", context)
 
 
-@csrf_protect
 def bun_updateItem(request):
     data = json.loads(request.body)
     productId = data["productId"]
@@ -207,6 +206,8 @@ def bun_processOrder(request):
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         total = float(data['form']['total'])
+        total = round(total, 2)
+        print("total:", total)
         order.transaction_id = transaction_id
         
         if total == order.get_cart_total:
@@ -221,8 +222,12 @@ def bun_processOrder(request):
                 city=data['shipping']['state'],
                 zipcode=data['shipping']['zipcode'],
             )
-        
     else:
         print('User is not logged in')
 
     return JsonResponse('Payment complete!', safe=False)
+
+
+def detalle_pagina(request, slug):
+    pagina = get_object_or_404(Product, slug=slug)
+    return render(request, 'detalle_pagina.html', {'pagina': pagina})

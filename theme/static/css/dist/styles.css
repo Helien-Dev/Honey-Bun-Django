@@ -2306,12 +2306,12 @@ input:checked + .toggle-bg {
     display: none;
   }
 
-  .sm\:h-7 {
-    height: 1.75rem;
-  }
-
   .sm\:h-8 {
     height: 2rem;
+  }
+
+  .sm\:h-7 {
+    height: 1.75rem;
   }
 
   .sm\:grid-cols-1 {

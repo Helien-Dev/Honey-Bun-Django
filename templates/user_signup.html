@@ -2,6 +2,12 @@
 
 {% block content %}
 
+{% if error_message %}
+
+    <h2>{{ error_message }}</h2>
+
+{% endif %}
+
 <form action="" method="POST">
     {% csrf_token %}
 
