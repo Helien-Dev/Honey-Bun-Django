@@ -1,5 +1,5 @@
 var updateBtns = document.getElementsByClassName("update-cart");
-var store_redirect = '/store/'
+var store_redirect = '{% url "bun_store" %}'
 
 // CSRFTOKEN
 function getCookie(name) {
@@ -19,6 +19,30 @@ function getCookie(name) {
 }
 const csrftoken = getCookie("csrftoken");
 
+
+// CART COOKIE 
+function getCookieCart(name){
+  var cookieArr = document.cookie.split(';')
+
+  for(var i = 0; i < cookieArr.length; i++) {
+    var cookiePair = cookieArr[i].split('=')
+
+    if (name == cookiePair[0].trim()){
+      return decodeURIComponent(cookiePair[1])
+    }
+  }
+  return null;
+}
+var cart = JSON.parse(getCookieCart('cart'))
+
+if(cart == undefined){
+  cart = {}
+  console.log('Cart was created')
+  document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+}
+
+console.log("cart:", cart)
+
 // CART/STORE
 for (let i = 0; i < updateBtns.length; i++) {
   updateBtns[i].addEventListener("click", function () {
@@ -28,11 +52,33 @@ for (let i = 0; i < updateBtns.length; i++) {
     console.log("USER:", user);
 
     if (user == "AnonymousUser") {
-      console.log("User is not authenticated");
+      addCookieItem()
     } else {
       updateUserOrder(productId, action);
     }
   });
+}
+
+function addCookieItem(productId, action){
+  console.log("User is not authenticated");
+
+  if(action == 'add'){
+    if(cart[productId] == undefined){
+      cart[productId] = {'quantity':1}
+    } else{
+      cart[productId]['quantity'] += 1
+    }
+  }
+  if (action == 'remove') {
+    cart[productId]['quantity'] -= 1
+    if (cart[productId]['quantity'] <= 0) {
+      console.log('Remove Item')
+      delete cart[productId]
+    }
+  }
+  console.log('Cart', cart)
+  document.cookie = 'cart=' + JSON.stringify(cart) + ";domain;path="
+  location.reload()
 }
 
 function updateUserOrder(productId, action) {
@@ -129,9 +175,13 @@ function submitFormData() {
   .then((data) => {
     console.log('Success:', data)
     alert('Transaction completed')
-    window.location.href = store_redirect
+
+    cart = {}
+    document.cookie = 'cart=' + JSON.stringify(cart) + ";domain;path="
+    window.location.href = '{% url "bun_store" %}'
   })
   .catch((error) => {
     console.error('Error', error)
   })
 }
+

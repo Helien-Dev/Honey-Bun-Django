@@ -7,8 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from django.http import JsonResponse
-from .models import *
 
+from .models import *
+from .utils import *
 
 # Create your views here.
 
@@ -22,9 +23,9 @@ def bun_Home(request):
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
     else:
+        order = {"get_cart_total": 0, "get_cart_items": 0, "shipping": False}
         cartItems = order["get_cart_items"]
         items = []
-        order = {"get_cart_total": 0, "get_cart_items": 0, "shipping": False}
 
     context = {
         "title": "Honey Bun Shop",
@@ -33,6 +34,7 @@ def bun_Home(request):
     }
 
     return render(request, "bun_home.html", context)
+
 
 # Login to a existing account
 def user_login(request):
@@ -50,6 +52,7 @@ def user_login(request):
             return render(request, "user_login.html", {"error_message": error_message})
 
     return render(request, "user_login.html")
+
 
 # Create an account
 def user_signup(request):
@@ -98,19 +101,13 @@ def user_logout(request):
     return redirect("/")
 
 
-# STORE, CART, CHECKOUT AND PRODUCT MANAGEMENT 
+# STORE, CART, CHECKOUT AND PRODUCT MANAGEMENT
 def bun_store(request):
+    data = cartData(request)
 
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        items = []
-        order = {"get_cart_total": 0, "get_cart_items": 0, "shipping": False}
-
-        cartItems = order["get_cart_items"]
+    cartItems = data["cartItems"]
+    order = data["order"]
+    items = data["items"]
 
     products = Product.objects.all()
     context = {
@@ -124,25 +121,11 @@ def bun_store(request):
 
 
 def bun_cart(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        error_message = "You need to be log in to get a cart"
+    data = cartData(request)
 
-        cartItems = order["get_cart_items"]
-        items = []
-        order = {"get_cart_total": 0, "get_cart_items": 0, "shipping": False}
-        context = {
-            "items": items,
-            "order": order,
-            "error_message": error_message,
-            "cartItems": cartItems,
-        }
-
-        return render(request, "bun_cart.html", context)
+    cartItems = data["cartItems"]
+    order = data["order"]
+    items = data["items"]
 
     context = {
         "items": items,
@@ -153,21 +136,18 @@ def bun_cart(request):
 
 
 def bun_checkout(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        items = []
-        order = {"get_cart_total": 0, "get_cart_items": 0, "shipping": False}
+    data = cartData(request)
 
-        cartItems = order["get_cart_items"]
+    cartItems = data["cartItems"]
+    order = data["order"]
+    items = data["items"]
+
+    print(cartItems, order, items)
 
     context = {
-        "items": items,
-        "order": order,
         "cartItems": cartItems,
+        "order": order,
+        "items": items,
     }
     return render(request, "bun_checkout.html", context)
 
@@ -197,37 +177,39 @@ def bun_updateItem(request):
 
 
 def bun_processOrder(request):
-    print('Data', request.body)
-    
+    print("Data", request.body)
+
     data = json.loads(request.body)
     transaction_id = datetime.datetime.now().timestamp()
 
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        total = float(data['form']['total'])
-        total = round(total, 2)
-        print("total:", total)
-        order.transaction_id = transaction_id
-        
-        if total == order.get_cart_total:
-            order.complete = True
-        order.save()
-        
-        if order.shipping == True:
-            ShippingAddress.objects.create(
-                customer=customer,
-                order=order,
-                address=data['shipping']['address'],
-                city=data['shipping']['state'],
-                zipcode=data['shipping']['zipcode'],
-            )
-    else:
-        print('User is not logged in')
 
-    return JsonResponse('Payment complete!', safe=False)
+    else:
+        customer, order = guestOrder(request, data)
+
+    total = float(data["form"]["total"])
+    total = round(total, 2)
+    print("total:", total)
+    order.transaction_id = transaction_id
+
+    if total == order.get_cart_total:
+        order.complete = True
+    order.save()
+
+    if order.shipping == True:
+        ShippingAddress.objects.create(
+            customer=customer,
+            order=order,
+            address=data["shipping"]["address"],
+            city=data["shipping"]["state"],
+            zipcode=data["shipping"]["zipcode"],
+        )
+
+    return JsonResponse("Payment complete!", safe=False)
 
 
 def detalle_pagina(request, slug):
     pagina = get_object_or_404(Product, slug=slug)
-    return render(request, 'detalle_pagina.html', {'pagina': pagina})
+    return render(request, "detalle_pagina.html", {"pagina": pagina})
