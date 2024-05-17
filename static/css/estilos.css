@@ -1,0 +1,75 @@
+body {
+    font-family: "Rubik", sans-serif;
+}
+
+.paddingX {
+    padding-left: 120px;
+    padding-right: 120px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.button-radius {
+    border: 1px solid #FCC862;
+    border-radius: 14px;
+    width: 500px;
+}
+
+.Bee-Polygon img {
+    position: absolute;
+    width: 1220px;
+    height: 1080px;
+    z-index: -100;
+    left: 680px;
+    top: -80px;
+    right: 3;
+    text-align: center;
+}
+
+.Small-Card {
+    border-radius: 14px;
+    min-width: 325px;
+    min-height: 380px;
+}
+
+.Small-Card img{
+    border-radius: 14px 14px 0px 0px;
+    width: 325px;
+    height: 215px;
+    object-fit: fill;
+}
+
+.Small-Card-Recomendation {
+    border-radius: 14px;
+    min-width: 325px;
+    min-height: 300px;
+}
+
+
+.Small-Card-Recomendation img{
+    border-radius: 14px 14px 0px 0px;
+    width: 325px;
+    height: 215px;
+    object-fit: fill;
+}
+
+.buttons {
+    padding: 14px;
+    background-color: #FCC862;
+    border-radius: 14px;
+    border: 1px solid black;
+}
+
+@media screen and (max-width: 1380px) {
+    .Bee-Polygon img {
+        isolation: auto;
+        position: absolute;
+        width: 800px;
+        height: 700px;
+        left: 650px;
+        right: 0;
+        top: 80px;
+        text-align: center;
+    }
+}
+

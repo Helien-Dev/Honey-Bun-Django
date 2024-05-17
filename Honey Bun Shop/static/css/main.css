@@ -1,3 +1,8 @@
 body {
-    font-family: 'Onest Variable', sans-serif;
+    font-family: "Rubik", sans-serif;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
 }

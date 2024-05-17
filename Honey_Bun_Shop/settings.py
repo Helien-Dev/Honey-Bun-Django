@@ -128,7 +128,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "Honey Bun Shop/images")
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
-    BASE_DIR / 'theme/static'
+    BASE_DIR / 'theme/static',
 ]
 
 TAILWIND_APP_NAME = 'theme'

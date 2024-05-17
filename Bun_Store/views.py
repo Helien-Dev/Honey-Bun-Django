@@ -26,11 +26,12 @@ def bun_Home(request):
         order = {"get_cart_total": 0, "get_cart_items": 0, "shipping": False}
         cartItems = order["get_cart_items"]
         items = []
-
+    products = Product.objects.all().order_by('?')[:2]
     context = {
         "title": "Honey Bun Shop",
         "description": "Home page of Honey Bun Shop",
         "cartItems": cartItems,
+        "products": products,
     }
 
     return render(request, "bun_home.html", context)
