@@ -1,5 +1,6 @@
 import json
 import datetime
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -7,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from django.http import JsonResponse
+from django_components import component
 
 from .models import *
 from .utils import *
@@ -27,11 +29,13 @@ def bun_Home(request):
         cartItems = order["get_cart_items"]
         items = []
     products = Product.objects.all().order_by('?')[:2]
+    single_product = Product.objects.all().order_by('?')[:1]
     context = {
         "title": "Honey Bun Shop",
         "description": "Home page of Honey Bun Shop",
         "cartItems": cartItems,
         "products": products,
+        'single_product': single_product,
     }
 
     return render(request, "bun_home.html", context)

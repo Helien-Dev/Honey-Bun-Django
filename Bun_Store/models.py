@@ -42,6 +42,8 @@ class Customer(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=200)
     price = models.FloatField()
+    offer = models.IntegerField(default=0)
+    on_offer = models.BooleanField(default=False)
     digital = models.BooleanField(default=False, null=True, blank=True)
     product_description = models.TextField(max_length=400, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
@@ -51,6 +53,11 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+    @property
+    def discounted_price(self):
+        discount = self.price * (self.offer / 100)
+        return self.price - discount
 
     DEFAULT_IMAGE_URL = settings.MEDIA_URL + "/not_image_found.jpg"
 
@@ -83,7 +90,7 @@ class Order(models.Model):
     def shipping(self):
         shipping = False
         orderitems = self.orderitem_set.all()
-        
+
         for i in orderitems:
             if i.product.digital == False:
                 shipping = True

@@ -1,0 +1,23 @@
+<section class="pt-[88px] text-center flex flex-col items-center justify-center content-center">
+  {% component 'title' %}
+  {% fill 'title' %}Destacado De La Semana{% endfill %}
+  {% endcomponent %}
+    <div class="flex flex-row gap-[44px] justify-center items-center pb-8">
+        {% for product in model_data %}
+        <article class="container_card_medium bg-white shadow-black/35 shadow-lg">
+          <img src="{{ product.ImageURL }}" alt="{{ product.alt }}" />
+          <div class="py-8">
+            <h2 class="font-semibold text-[22px] leading-[28px]">
+              {{ product.name }}
+            </h2>
+            <h2 class="font-semibold text-[22px] leading-[28px]">
+              ${{ product.price }}
+            </h2>
+            <div class="py-7 flex flex-row justify-center content-center">
+              <button class="buttons flex flex-row items-center"><svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24"><g fill="none" stroke="black"><circle cx="10" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M3.5 4h2l3.504 11H17"/><path stroke-linecap="round" stroke-linejoin="round" d="M8.224 12.5L6.3 6.5h12.507a.5.5 0 0 1 .475.658l-1.667 5a.5.5 0 0 1-.474.342z"/></g></svg> Añadir al carrito</button>
+            </div>
+          </div>
+        </article>
+        {% endfor %} 
+    </div>
+</section>   

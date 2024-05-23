@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'django_browser_reload',
+    'django_components',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +61,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR, 'templates'],
-        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -68,6 +68,16 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'loaders':[(
+                'django.template.loaders.cached.Loader', [
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                    'django_components.template_loader.Loader',
+                ]
+            )],
+            'builtins': [
+                'django_components.templatetags.component_tags',
+            ]
         },
     },
 ]
@@ -129,6 +139,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "Honey Bun Shop/images")
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     BASE_DIR / 'theme/static',
+    os.path.join(BASE_DIR, "components"),
 ]
 
 TAILWIND_APP_NAME = 'theme'

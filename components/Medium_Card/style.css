@@ -1,0 +1,11 @@
+.container_card_medium {
+    border-radius: 14px;
+}
+
+.container_card_medium img{
+    width: 380px;
+    height: 400px;
+    border-radius: 14px 14px 0px 0px;
+    object-fit: cover;
+}
+

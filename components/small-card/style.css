@@ -1,0 +1,52 @@
+.small_card-component {
+    max-width: 691px;
+}
+
+.small_card-component span {
+    width: 27px;
+    background-color: #424242;
+}
+
+.container_card {
+    border-radius: 14px;
+}
+
+.container_card img{
+    width: 325px;
+    height: 215px;
+    border-radius: 14px 14px 0px 0px;
+    object-fit: fill;
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: auto max-content auto;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+    padding: 10px 10px;
+}
+
+.line {
+    height: 6px;
+    background-color: #FCC862;
+}
+
+.line:first-child {
+    width: 50px;
+}
+
+.line:last-child {
+    width: 50px;
+}
+
+.text {
+    white-space: nowrap;
+    padding: 0 0px;
+}
+
