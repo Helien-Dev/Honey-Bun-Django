@@ -45,19 +45,15 @@
               ${{ product.price }}
             </h2>
             <div class="py-7">
-              <a
-                class="buttons my-[5px] flex flex-row items-center text-center gap-2 mx-[70px]"
-                href="{% url 'detalle_pagina' slug=product.slug %}"
-                ><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="black" d="M21.822 7.431A1 1 0 0 0 21 7H7.333L6.179 4.23A1.994 1.994 0 0 0 4.333 3H2v2h2.333l4.744 11.385A1 1 0 0 0 10 17h8c.417 0 .79-.259.937-.648l3-8a1 1 0 0 0-.115-.921M17.307 15h-6.64l-2.5-6h11.39z"/><circle cx="10.5" cy="19.5" r="1.5" fill="black"/><circle cx="17.5" cy="19.5" r="1.5" fill="black"/></svg>Añadir al Carrito</a
-              >
+              {% component 'add_to_cart' %}{% endcomponent %}
             </div>
           </div>
         </article>
         {% endfor %}
       </div>
-        <div class="flex flex-row justify-center items-center content-center gap-4">
+        <div class="flex flex-row justify-center items-center content-center gap-5 w-full">
           {% for product in products  %}
-          <article class="container_card bg-white shadow-black/35 shadow-lg">
+          <article class="container_card bg-white shadow-black/35 shadow-lg w-full m-auto">
             <img src="{{ product.ImageURL }}" alt="{{ product.alt }}" />
             <div class="my-[5px]">
               <h2 class="font-semibold text-[22px] leading-[28px]">
@@ -67,11 +63,7 @@
                 ${{ product.price }}
               </h2>
               <div class="py-7">
-                <a
-                  class="buttons my-[5px] flex flex-row items-center text-center gap-2 mx-[70px]"
-                  href="{% url 'detalle_pagina' slug=product.slug %}"
-                  ><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="black" d="M21.822 7.431A1 1 0 0 0 21 7H7.333L6.179 4.23A1.994 1.994 0 0 0 4.333 3H2v2h2.333l4.744 11.385A1 1 0 0 0 10 17h8c.417 0 .79-.259.937-.648l3-8a1 1 0 0 0-.115-.921M17.307 15h-6.64l-2.5-6h11.39z"/><circle cx="10.5" cy="19.5" r="1.5" fill="black"/><circle cx="17.5" cy="19.5" r="1.5" fill="black"/></svg>Añadir al Carrito</a
-                >
+                {% component 'add_to_cart' %}{% endcomponent %}
               </div>
             </div>
           </article>

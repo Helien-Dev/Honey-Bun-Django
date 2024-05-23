@@ -18,7 +18,7 @@ from .utils import *
 
 # HOME AND ACCOUNT MANAGEMENT
 @login_required
-def bun_Home(request):
+def home(request):
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
@@ -38,7 +38,7 @@ def bun_Home(request):
         'single_product': single_product,
     }
 
-    return render(request, "bun_home.html", context)
+    return render(request, "Home.html", context)
 
 
 # Login to a existing account
@@ -215,6 +215,6 @@ def bun_processOrder(request):
     return JsonResponse("Payment complete!", safe=False)
 
 
-def detalle_pagina(request, slug):
-    pagina = get_object_or_404(Product, slug=slug)
-    return render(request, "detalle_pagina.html", {"pagina": pagina})
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    return render(request, "Product_detail.html", {"product": product})

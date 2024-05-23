@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="flex flex-col items-center content-center justify-center">
+    <section class="flex flex-row bg-white rounded-2xl max-w-[924px] w-full m-auto shadow-black/15 shadow-xl mb-[80px]">
+        <article class="max-w-[493px] py-5 px-5">
+            <img class="rounded-2xl max-w-[493px] max-h-[539px] object-fill" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
+            <div class="flex flex-row gap-1">
+                <img class="rounded-2xl max-w-[100px] max-h-[100px] w-full object-fill border-black border-2 border-solid" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
+                <img class="rounded-2xl max-w-[100px] max-h-[100px] w-full object-fill border-black border-2 border-solid" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
+                <img class="rounded-2xl max-w-[100px] max-h-[100px] w-full object-fill border-black border-2 border-solid" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
+                <img class="rounded-2xl max-w-[100px] max-h-[100px] w-full object-fill border-black border-2 border-solid" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
+                <img class="rounded-2xl max-w-[100px] max-h-[100px] w-full object-fill border-black border-2 border-solid" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
+            </div>
+        </article>
+        <article class="flex flex-col gap-8 py-5">
+            <h2>{{ product.name }}</h2>
+            <p>Brand Name</p>
+            <h3>Price: ${{ product.price }}</h3>
+            <div>
+                <h4>Description</h4>
+                <p>{{ product.product_description }}</p>
+            </div>
+            {% component 'add_to_cart' %}{% endcomponent %}
+        </article>
+    </section>
+
+    {% component 'title' %}
+    {% fill 'title' %}Mas Acerda de {{ product.name|capfirst }}{% endfill %}
+    {% endcomponent %} 
+
+    {% component 'recomendation_card' model_instance=model_instance %}{% endcomponent %}
+    
+</section>
+
+{% endblock content %}
