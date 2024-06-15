@@ -1,22 +1,3 @@
-.small_card-component {
-    max-width: 691px;
-}
-
-.small_card-component span {
-    width: 27px;
-    background-color: #424242;
-}
-
-.container_card {
-    border-radius: 14px;
-}
-
-.container_card img{
-    width: 325px;
-    height: 215px;
-    border-radius: 14px 14px 0px 0px;
-    object-fit: fill;
-}
 
 
 .container {

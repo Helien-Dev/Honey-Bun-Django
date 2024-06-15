@@ -1,21 +1,59 @@
+:root {
+    --light-accent-color: #FCC862;
+    --light-background-color: #FEFFEA;
+    --light-second-color: #424242;
+
+    --font-display-large-size: 65px;
+    --font-display-large-line-height: 64px;
+    --font-display-large-weight: bold;
+    --font-display-large-color: black;
+    --font-display-large-letter-spacing: -0.025em;
+
+    --font-headline-large-size: 32px;
+    --font-headline-large-weight: 600;
+    --font-headline-large-color: black;
+    --font-headline-large-line-height: 30px;
+
+    --font-body-large-size: 16px;
+    --font-body-large-weight: bold;
+    --font-body-large-line-height: 24px;
+    --font-body-large-letter-spacing: 0.05em;
+}
 
 body {
     font-family: "Rubik", sans-serif;
-    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 
-.web_padding {
-    padding-left: 120px;
-    padding-right: 120px;
-    padding-top: 40px;
-    padding-bottom: 40px;
+.font-display-large {
+    font-size: var(--font-display-large-size);
+    font-weight: var(--font-display-large-weight);
+    line-height: var(--font-display-large-line-height);
+    letter-spacing: var(--font-display-large-letter-spacing);
+    color: var(--font-display-large-color);
 }
 
-.button-radius {
-    border: 1px solid #FCC862;
-    border-radius: 14px;
-    width: 500px;
+.font-headline-large {
+    font-size: var(--font-headline-large-size);
+    font-weight: var(--font-headline-large-weight);
+    line-height: var(--font-headline-large-line-height);
+    color: var(--font-headline-large-color);
+}
+
+.font-body-large-bold {
+    font-size: var(--font-body-large-size);
+    font-weight: var(--font-body-large-weight);
+    line-height: var(--font-body-large-line-height);
+    letter-spacing: var(--font-body-large-letter-spacing);
+}
+
+.font-body-large {
+    font-size: var(--font-body-large-size);
+    line-height: var(--font-body-large-line-height);
+    letter-spacing: var(--font-body-large-letter-spacing);
 }
 
 .Bee-Polygon img {
@@ -26,41 +64,6 @@ body {
     left: 896px;
     top: -80px;
     text-align: center;
-}
-
-.Small-Card {
-    border-radius: 14px;
-    min-width: 325px;
-    min-height: 380px;
-}
-
-.Small-Card img {
-    border-radius: 14px 14px 0px 0px;
-    width: 325px;
-    height: 215px;
-    object-fit: fill;
-}
-
-.Small-Card-Recomendation {
-    border-radius: 14px;
-    min-width: 325px;
-    min-height: 300px;
-}
-
-
-.Small-Card-Recomendation img {
-    border-radius: 14px 14px 0px 0px;
-    width: 325px;
-    height: 215px;
-    object-fit: fill;
-}
-
-.buttons {
-    padding: 14px;
-    background-color: #FCC862;
-    border-radius: 14px;
-    border: 1px solid black;
-    font-weight: 500;
 }
 
 .container_title {
@@ -94,8 +97,6 @@ body {
     white-space: nowrap;
     padding: 0 0px;
 }
-
-
 
 @media screen and (max-width: 1380px) {
     .Bee-Polygon img {

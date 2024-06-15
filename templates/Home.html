@@ -4,7 +4,7 @@
 
 <section class="flex">
   <div class="max-w-[780px] relative">
-    <h1 class="font-bold leading-[72.9px] tracking-tight text-[65px] z-10">
+    <h1 class="font-display-large z-10">
       ¡Bienvenido {{ user.username.capitalize }} a Honey Bun
       <span class="text-[#FCC862]">Shop</span>!
     </h1>
@@ -27,7 +27,6 @@
   {% component 'title' %}
   {% fill 'title' %}Ofertas de Temporada{% endfill %}
   {% endcomponent %}
-  </div>
   <div class="flex flex-row">
     <div class="Bee-spring relative right-[180px]">
       <img width="980" height="800" src="{% static 'images/Spring.png' %}" alt="">
@@ -35,8 +34,8 @@
     <div class="flex flex-col justify-center items-center content-center gap-4">
       <div>
         {% for product in single_product %}
-        <article class="container_card bg-white shadow-black/35 shadow-lg">
-          <img src="{{ product.ImageURL }}" alt="{{ product.alt }}" />
+        <article class="w-[325px] h-[380px] rounded-[14px] bg-white shadow-black/35 shadow-lg">
+          <img class="object-fill rounded-t-[14px] w-[325px] h-[213px]" src="{{ product.ImageURL }}" alt="{{ product.alt }}" />
           <div class="my-[5px]">
             <h2 class="font-semibold text-[22px] leading-[28px]">
               {{ product.name }}
@@ -44,17 +43,17 @@
             <h2 class="font-semibold text-[22px] leading-[28px]">
               ${{ product.price }}
             </h2>
-            <div class="py-7">
+            <div class="py-7 flex flex-row justify-center content-center">
               {% component 'add_to_cart' %}{% endcomponent %}
             </div>
           </div>
         </article>
         {% endfor %}
       </div>
-        <div class="flex flex-row justify-center items-center content-center gap-5 w-full">
+        <div class="flex flex-row justify-center items-center content-center gap-5">
           {% for product in products  %}
-          <article class="container_card bg-white shadow-black/35 shadow-lg w-full m-auto">
-            <img src="{{ product.ImageURL }}" alt="{{ product.alt }}" />
+          <article class="w-[325px] h-[380px] rounded-[14px] bg-white shadow-black/35 shadow-lg">
+            <img class="object-fill rounded-t-[14px] w-[325px] h-[213px]" src="{{ product.ImageURL }}" alt="{{ product.alt }}" />
             <div class="my-[5px]">
               <h2 class="font-semibold text-[22px] leading-[28px]">
                 {{ product.name }}
@@ -62,7 +61,7 @@
               <h2 class="font-semibold text-[22px] leading-[28px]">
                 ${{ product.price }}
               </h2>
-              <div class="py-7">
+              <div class="py-7 flex flex-row justify-center content-center">
                 {% component 'add_to_cart' %}{% endcomponent %}
               </div>
             </div>
@@ -71,6 +70,7 @@
         </div>
     </div>
   </div>
+  <p class="font-body-large pt-14 max-w-[700px] text-center m-auto">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti, praesentium quo. Debitis eius quibusdam itaque unde beatae corporis cupiditate delectus reiciendis aperiam, voluptates minus voluptatibus obcaecati dolor velit quae commodi.</p>
 </section>
 
 {% component 'medium_card' model_instance=model_instance %}{% endcomponent %}

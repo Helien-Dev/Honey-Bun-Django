@@ -28,7 +28,7 @@
     {% component_css_dependencies %}
     <title>{{ title }}</title>
   </head>
-  <body class="bg-[#eaebd1]">
+  <body class="bg-[var(--light-background-color)]">
     <!--Navbar-->
     <header>
       <nav>
@@ -42,7 +42,7 @@
             <li><a href="">Ofertas</a></li>
           </div>
           <div >
-            <button class="button-radius flex flex-row items-center gap-2  py-[10px] px-[10px] text-[#424242]"
+            <button class="flex flex-row items-center gap-2  py-[10px] px-[10px] text-[#424242] rounded-[14px] border-[1px] border-solid border-[var(--light-accent-color)] w-[500px]"
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -92,7 +92,8 @@
     </header>
 
     <!--Main content-->
-    <main class="web_padding">{% block content %}{% endblock content %}</main>
+    <main class="py-[40px] px-[120px]">{% block content %}{% endblock content %}</main>
+    
     <!--Footer-->
     <footer class="pt-7 ">
       <section class="px-[120px] flex flex-row gap-20 items-center justify-center" >

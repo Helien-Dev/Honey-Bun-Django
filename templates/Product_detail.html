@@ -4,26 +4,32 @@
 {% block content %}
 
 <section class="flex flex-col items-center content-center justify-center">
-    <section class="flex flex-row bg-white rounded-2xl max-w-[924px] w-full m-auto shadow-black/15 shadow-xl mb-[80px]">
-        <article class="max-w-[493px] py-5 px-5">
-            <img class="rounded-2xl max-w-[493px] max-h-[539px] object-fill" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
-            <div class="flex flex-row gap-1">
-                <img class="rounded-2xl max-w-[100px] max-h-[100px] w-full object-fill border-black border-2 border-solid" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
-                <img class="rounded-2xl max-w-[100px] max-h-[100px] w-full object-fill border-black border-2 border-solid" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
-                <img class="rounded-2xl max-w-[100px] max-h-[100px] w-full object-fill border-black border-2 border-solid" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
-                <img class="rounded-2xl max-w-[100px] max-h-[100px] w-full object-fill border-black border-2 border-solid" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
-                <img class="rounded-2xl max-w-[100px] max-h-[100px] w-full object-fill border-black border-2 border-solid" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
+    <section class="flex flex-row bg-white rounded-2xl max-w-[924px] w-full m-auto shadow-black/15 shadow-xl mb-[80px] gap-6">
+        <article class="max-w-[493px] py-5">
+            <div >
+                <img class="rounded-2xl  max-w-[493px] max-h-[539px] object-fill" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
+                <div class="flex flex-row gap-1 px-2 items-center content-center justify-center">
+                    <img class="rounded-2xl max-w-[100px] max-h-[100px] w-full object-fill border-black border-[1px] border-solid" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
+                    <img class="rounded-2xl max-w-[100px] max-h-[100px] w-full object-fill border-black border-[1px] border-solid" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
+                    <img class="rounded-2xl max-w-[100px] max-h-[100px] w-full object-fill border-black border-[1px] border-solid" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
+                    <img class="rounded-2xl max-w-[100px] max-h-[100px] w-full object-fill border-black border-[1px] border-solid" src="{{ product.ImageURL }}" alt="{{ product.alt }}">
+                </div>
             </div>
         </article>
         <article class="flex flex-col gap-8 py-5">
-            <h2>{{ product.name }}</h2>
-            <p>Brand Name</p>
-            <h3>Price: ${{ product.price }}</h3>
             <div>
-                <h4>Description</h4>
-                <p>{{ product.product_description }}</p>
+                <h2 class="font-headline-large">{{ product.name }}</h2>
+                <p class="font-body-large-bold text-[#424242]">Brand Name</p>
             </div>
-            {% component 'add_to_cart' %}{% endcomponent %}
+            <h3 class="font-display-large">Price: ${{ product.price }}</h3>
+            <div>
+                <h4 class="font-body-large-bold text-[#424242]">Description</h4>
+                <p class="font-body-large">{{ product.product_description }}</p>
+            </div>
+            <div class="py-7 grid grid-cols-2 gap-3">
+                {% component 'add_to_cart' %}{% endcomponent %}
+                {% component 'buy_product' %}{% endcomponent %}
+            </div>
         </article>
     </section>
 

@@ -9,15 +9,15 @@
           <div class="flex flex-row gap-[10px]">
             {% for product in model_data %}
             <article
-              class="Small-Card-Recomendation bg-white text-center shadow-black/35 shadow-lg"
+              class="rounded-[14px] min-w-[325px] min-h-[300px] bg-white text-center shadow-black/35 shadow-lg"
             >
-              <img src="{{ product.ImageURL }}" alt="{{ product.alt }}" />
+              <img class="rounded-t-[14px] w-[325px] h-[300px] object-fill" src="{{ product.ImageURL }}" alt="{{ product.alt }}" />
               <h3 class="font-semibold text-[22px]">{{ product.name }}</h3>
               <h3 class="font-semibold text-[22px]">${{ product.price }}</h3>
             </article>
             {% endfor %}
           </div>
-          <button class="buttons">
+          <button class="p-[14px] bg-[var(--light-accent-color)] rounded-[14px] border-[1px] border-solid border-black font-[500]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="30px"
