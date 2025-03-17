@@ -1,0 +1,8 @@
+services:
+  honey_bun_docker:
+    build: .
+    ports:
+    - "8000:8000"
+    volumes:
+    - .:/app
+    

@@ -14,6 +14,8 @@ django-browser-reload==1.12.1
 django-compressor==4.4
 django-debug-toolbar==4.3.0
 django-tailwind==3.8.0
+django_components==0.130
+djc_core_html_parser==1.0.1
 gunicorn==22.0.0
 idna==3.7
 Jinja2==3.1.3
