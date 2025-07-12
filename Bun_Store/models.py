@@ -8,6 +8,23 @@ from django.conf import settings
 
 # Create your models here.
 class Customer(models.Model):
+    """
+    Customer model representing a user of the store.
+
+    This model extends the built-in Django User model with additional customer-specific information.
+    It automatically creates/updates a Customer instance when a User is created/updated.
+
+    Attributes:
+        user (User): One-to-one relationship with Django's User model
+        password (str): Customer's password, max length 200 chars
+        first_name (str): Customer's first name, max length 200 chars  
+        last_name (str): Customer's last name, max length 200 chars
+        email (EmailField): Customer's email address, max length 300 chars
+
+    Methods:
+        create_or_update_customer: Signal receiver that creates/updates Customer when User changes
+        __str__: Returns customer's first name as string representation
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     password = models.CharField(max_length=200, null=True)
     first_name = models.CharField(max_length=200, null=True)
